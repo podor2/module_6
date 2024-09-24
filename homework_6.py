@@ -39,16 +39,13 @@ class Record:
         founded_phone = self.find_phone(phone)
         if founded_phone :
             self.phones.remove(founded_phone)
+        else : 
+            raise ValueError
     
     def edit_phone(self, old_phone, new_phone) :
-        founded_phone = self.find_phone(old_phone)
-        if founded_phone :
-            new_phone = Phone(new_phone)
-            self.phones.insert(self.phones.index(founded_phone), new_phone)
-            self.phones.remove(founded_phone)
-        else :
-            raise ValueError
-           
+        self.remove_phone(old_phone)
+        self.add_phone(new_phone)
+            
     def find_phone(self, phone) :
         for phone_object in self.phones:
             if phone_object.value == phone:
@@ -74,7 +71,7 @@ class AddressBook(UserDict):
         del self.data[name]
     
     def __str__(self) :
-        return f"List of persons : {'; '.join(person for person in self.data )}"
+        return f"List of availible contacts:\n{'\n'.join(f'\t{str(record)}' for record in self.data.values())}"
     
         
         
